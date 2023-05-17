@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Navigation from './components/Navigation/Navigation';
+import SignIn from './components/SignIn/SignIn';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
@@ -8,6 +9,15 @@ import { loadFull } from "tsparticles";
 import './App.css';
 
 const App = () => {
+  // const [input, setInput] = useState('');
+  // const [imageUrl, setImageUrl] = useState('');
+  // const [box, setBox] = useState({});
+  const [route, setRoute] = useState('signin');
+
+  const onRouteChange = () => {
+    setRoute('home');
+  }
+
   const particlesInit = useCallback(async engine => {
     console.log(engine);
     await loadFull(engine);
@@ -67,10 +77,14 @@ const App = () => {
         }}
       />
       <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm />
-      {/*<FaceRecognition />*/}
+      {route === 'signin'
+        ? <SignIn onRouteChange={onRouteChange} />
+        : <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm />
+          {/*<FaceRecognition />*/}
+        </>}
     </div>
   );
 }
