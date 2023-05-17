@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
@@ -14,8 +15,8 @@ const App = () => {
   // const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
 
-  const onRouteChange = () => {
-    setRoute('home');
+  const onRouteChange = (route) => {
+    setRoute(route);
   }
 
   const particlesInit = useCallback(async engine => {
@@ -76,15 +77,17 @@ const App = () => {
           detectRetina: true,
         }}
       />
-      <Navigation />
+      <Navigation onRouteChange={onRouteChange} />
       {route === 'signin'
         ? <SignIn onRouteChange={onRouteChange} />
-        : <>
-          <Logo />
-          <Rank />
-          <ImageLinkForm />
-          {/*<FaceRecognition />*/}
-        </>}
+        : route === 'register'
+          ? <Register onRouteChange={onRouteChange} />
+          : <>
+            <Logo />
+            <Rank />
+            <ImageLinkForm />
+            {/*<FaceRecognition />*/}
+          </>}
     </div>
   );
 }
