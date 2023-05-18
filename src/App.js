@@ -14,10 +14,22 @@ const App = () => {
   // const [imageUrl, setImageUrl] = useState('');
   // const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
+  const [isSignIn, setIsSignIn] = useState(false);
 
   const onRouteChange = (route) => {
-    setRoute(route);
+    if (route === 'signout') {
+      setIsSignIn(false);
+      setRoute('signin');  // set the route to 'signin' after signing out
+    } else if (route === 'home') {
+      setIsSignIn(true);
+      setRoute(route);
+    } else {   // 'signin' or 'register' route
+      setIsSignIn(false);
+      setRoute(route);
+    }
   }
+
+
 
   const particlesInit = useCallback(async engine => {
     console.log(engine);
@@ -77,7 +89,7 @@ const App = () => {
           detectRetina: true,
         }}
       />
-      <Navigation onRouteChange={onRouteChange} />
+      <Navigation isSignIn={isSignIn} onRouteChange={onRouteChange} />
       {route === 'signin'
         ? <SignIn onRouteChange={onRouteChange} />
         : route === 'register'
